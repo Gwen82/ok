@@ -1,308 +1,334 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>STUDYDY</title>
+  <title>STUDYDY &mdash; AI Learning Platform Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
-      --gradient-bg: linear-gradient(120deg, #f8fafc 0%, #e2f0fe 45%, #e0ffe9 100%);
+      --gradient-bg: linear-gradient(120deg, #f5fcff 20%, #e9f4ff 60%, #ebffe7 100%);
+      --card-shadow: 0 8px 40px 0 rgba(64,101,244,0.08);
       --card-bg: #fff;
-      --card-shadow: 0 2px 24px 0 rgba(30, 60, 90, 0.09);
       --primary: #4975fa;
       --secondary: #30d493;
-      --input-bg: #f2f8fe;
-      --input-border: #e9edfc;
-      --font: 'Inter', 'Segoe UI', Arial, sans-serif;
+      --input-bg: #f4f8ff;
+      --input-border: #e5eaff;
+      --font: 'Inter', 'Segoe UI', Arial, 'Noto Sans TC', '微軟正黑體', 'Heiti TC', sans-serif;
     }
 
     html, body {
-      min-height: 100vh;
+      height: 100%;
       margin: 0;
       font-family: var(--font);
       background: var(--gradient-bg);
+      min-height: 100vh;
     }
 
-    .bg-pattern {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background: url('data:image/svg+xml;utf8,<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="60" fill="%2330d49310"/><ellipse cx="220" cy="200" rx="42" ry="32" fill="%234975fa16"/><ellipse cx="50" cy="260" rx="36" ry="18" fill="%2330d49316"/><circle cx="280" cy="70" r="30" fill="%234975fa10"/></svg>') repeat;
-      background-size: 320px 320px;
-      opacity: 0.2;
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
     }
 
-    .split-container {
+    .split-wrapper {
+      min-height: 100vh;
       display: flex;
-      max-width: 1100px;
-      height: 80vh;
-      min-height: 580px;
-      margin: 5vh auto;
-      border-radius: 2rem;
-      box-shadow: var(--card-shadow);
-      background: rgba(255,255,255,0.03);
-      overflow: hidden;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
       position: relative;
       z-index: 1;
     }
 
-    .split-left {
-      flex: 1;
-      background: none;
+    .left-side {
+      flex: 1.05;
+      background: transparent;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      padding: 3rem 2.5rem 2rem 2.5rem;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 2.5rem;
       min-width: 340px;
       border-top-left-radius: 2rem;
       border-bottom-left-radius: 2rem;
+      /* Optional: subtle overlay for abstract pattern */
+      position: relative;
+      z-index: 2;
     }
 
-    .logo-text {
+    .left-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 32px;
+      width: 100%;
+      /* generous spacing */
+      padding: 0 0.4em;
+    }
+
+    .logo {
       font-weight: 800;
-      font-size: 2.3rem;
+      font-size: 2.35rem;
       color: var(--primary);
-      letter-spacing: -1px;
-      margin-bottom: 2.5rem;
-      margin-top: 0.2rem;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 1.2em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       user-select: none;
     }
 
-    .split-left .tagline {
-      font-size: 1.55rem;
-      font-weight: 600;
-      color: #19326c;
-      margin-bottom: 2.5rem;
+    .logo-symbol {
+      background: var(--secondary);
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      font-size: 1.35rem;
+      padding: 0.3em 0.6em;
+      margin-right: 7px;
+      box-shadow: 0 1px 10px #30d49333;
+      text-align: center;
+    }
+
+    .main-slogan {
+      font-size: 1.6rem;
+      color: #222;
+      font-weight: 700;
+      margin-bottom: 0.6em;
       letter-spacing: 0.01em;
-      word-break: keep-all;
     }
 
-    .split-left .cn-tagline {
-      font-size: 1.19rem;
-      color: #3368b8;
+    .secondary-slogan {
+      font-size: 1.18rem;
+      color: #222;
       font-weight: 500;
-      opacity: 0.9;
-      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.3em;
     }
 
-    .split-right {
-      flex: 1.1;
-      background: var(--card-bg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2.5rem 2rem;
-      border-top-right-radius: 2rem;
-      border-bottom-right-radius: 2rem;
-      position: relative;
-      min-width: 350px;
-      box-shadow: 0 0px 24px 0 rgba(73,117,250,0.06);
-    }
-    .login-card {
-      width: 100%;
-      max-width: 410px;
-      padding: 0;
-      margin: 0;
+    .right-side {
+      flex: 1.2;
+      background: none;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 2.3rem;
+      justify-content: center;
+      align-items: center;
+      min-width: 380px;
+      padding: 2rem 3.3rem;
+      border-top-right-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+      z-index: 2;
+    }
+    .login-card {
+      background: var(--card-bg);
+      box-shadow: var(--card-shadow);
+      border-radius: 1.6em;
+      padding: 3.5em 2.5em 2.2em 2.5em;
+      min-width: 350px;
+      width: 90%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+      align-items: center;
     }
 
-    .welcome-title {
+    .login-title {
       font-size: 2.5rem;
-      font-weight: 900;
-      color: var(--primary);
-      letter-spacing: -2px;
-      margin-bottom: 0.3rem;
-      line-height: 1.06;
+      font-weight: 800;
+      color: #222;
+      margin-bottom: 0.5em;
+      text-align: left;
+      width: 100%;
+      letter-spacing: -0.5px;
     }
-    .subtitle {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #19326c;
-      opacity: 0.84;
-      margin-bottom: 1.6rem;
-      line-height: 1.06;
+    .login-subtitle {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: #888;
+      margin-bottom: 1em;
+      text-align: left;
+      width: 100%;
+      letter-spacing: 0.01em;
     }
 
     form {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 1.15rem;
+      gap: 1.1rem;
+      margin-bottom: 0.7em;
     }
+
     .input-group label {
-      font-size: 1.01rem;
-      color: #19326c;
-      font-weight: 500;
-      margin-bottom: 0.2rem;
+      font-size: 1.06rem;
+      color: #222;
+      font-weight: 600;
+      margin-bottom: 0.26em;
       display: block;
       letter-spacing: 0.01em;
+      text-align: left;
+      width: 100%;
     }
+
     .input-group input {
       width: 100%;
-      padding: 1em 1em;
+      padding: 1em 1.15em;
       border-radius: 1em;
-      border: 1px solid var(--input-border);
+      border: 1.5px solid var(--input-border);
       background: var(--input-bg);
-      font-size: 1.07rem;
+      font-size: 1.06rem;
       outline: none;
       transition: border 0.2s;
-      margin-top: 0.14em;
+      font-weight: 500;
+      color: #222;
     }
     .input-group input:focus {
-      border: 1.5px solid var(--primary);
+      border: 1.7px solid var(--primary);
       background: #f4f9ff;
     }
 
-    .btn-row {
-      width: 100%;
+    .login-actions {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      margin-top: 0.8rem;
+      width: 100%;
+      gap: 0.7em;
+      margin-top: 0.7em;
     }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    .btn {
+      width: 100%;
       border: none;
-      border-radius: 0.97em;
+      border-radius: 1em;
+      font-size: 1.15rem;
       font-weight: 700;
-      font-size: 1.13rem;
-      padding: 0.95em 0;
+      padding: 1em 0;
+      box-shadow: 0 2px 14px #4975fa18;
       cursor: pointer;
-      box-shadow: 0 2px 10px #4975fa22;
-      transition: background 0.18s;
-      width: 100%;
-    }
-    .btn-primary:hover,
-    .btn-primary:focus {
-      background: #274fc5;
+      transition: background 0.18s, color 0.18s;
+      margin-bottom: 0;
       outline: none;
+      background: #f2f6ff;
+      color: #222;
     }
-
-    .btn-secondary {
+    .btn.btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 16px #4975fa22;
+    }
+    .btn.btn-primary:hover,
+    .btn.btn-primary:focus {
+      background: #2c52c6;
+      color: #fff;
+    }
+    .btn.btn-secondary {
       background: var(--secondary);
-      color: white;
-      border: none;
-      border-radius: 0.97em;
-      font-weight: 600;
-      font-size: 1.02rem;
-      padding: 0.88em 0;
-      box-shadow: 0 2px 10px #30d49322;
-      cursor: pointer;
-      transition: background 0.18s;
-      width: 100%;
-      margin-bottom: 0.2em;
+      color: #fff;
+      box-shadow: 0 4px 16px #30d49320;
     }
-    .btn-secondary:hover,
-    .btn-secondary:focus {
+    .btn.btn-secondary:hover,
+    .btn.btn-secondary:focus {
       background: #21876b;
-      outline: none;
+      color: #fff;
     }
-
-    .forgot-link {
-      display: block;
+    .btn.btn-link {
+      background: #f2f6ff;
+      color: #222;
+      box-shadow: none;
+      font-size: 1.09rem;
+      font-weight: 600;
+      margin-top: 0.2em;
+      padding: 0.8em 0;
+      border: 1.4px solid #f2f6ff;
+      transition: background 0.13s, color 0.13s, border 0.13s;
+    }
+    .btn.btn-link:hover,
+    .btn.btn-link:focus {
+      background: #eff2fe;
       color: var(--primary);
-      font-size: 1.02rem;
-      text-decoration: none;
-      text-align: center;
-      transition: color 0.18s;
-      padding: 0.47em 0;
-      border-radius: 0.97em;
-      background: #f7fafe;
-      margin-top: 0.1em;
-      width: 100%;
-      font-weight: 500;
-    }
-    .forgot-link:hover {
-      color: #2349a0;
-      background: #f1f5fe;
+      border: 1.5px solid var(--primary);
     }
 
-    @media (max-width: 1050px) {
-      .split-container {
+    /* Responsive - fallback to vertical on small screens */
+    @media (max-width: 980px) {
+      .split-wrapper {
         flex-direction: column;
-        height: auto;
-        min-height: 680px;
-        border-radius: 1.5rem;
+        align-items: stretch;
+        justify-content: flex-start;
       }
-      .split-left, .split-right {
-        min-width: unset;
+      .left-side, .right-side {
         border-radius: 0;
+        padding: 2.4em 1em;
+        min-width: unset;
       }
-      .split-right {
-        border-bottom-right-radius: 1.5rem;
-        border-bottom-left-radius: 1.5rem;
-        box-shadow: none;
-      }
-      .split-left {
-        border-top-left-radius: 1.5rem;
-        border-top-right-radius: 1.5rem;
-        align-items: center;
-        text-align: center;
-        padding: 2.3rem 1.3rem 2rem 1.3rem;
-        gap: 0.3rem;
+      .login-card {
+        min-width: unset;
+        max-width: 500px;
+        width: 96%;
+        padding: 2em 1em 1.2em 1em;
       }
     }
-    @media (max-width: 680px) {
-      .split-container {
-        margin: 0;
-        border-radius: 0;
-        width: 100vw;
-        min-height: 100vh;
-        box-shadow: none;
-      }
-      .split-left, .split-right {
-        padding: 1.2rem 0.7rem;
-      }
-      .split-right {
-        min-width: 0;
-      }
-      .logo-text {
-        font-size: 1.4rem;
-      }
-      .tagline { font-size: 1.1rem; }
-      .cn-tagline { font-size: 1rem; }
-      .welcome-title { font-size: 2rem; }
-      .subtitle { font-size: 1.12rem; }
+    /* Hide abstract pattern when small */
+    @media (max-width: 700px) {
+      .bg-pattern { display: none; }
+    }
+
+    /* Subtle abstract pattern in background */
+    .bg-pattern {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        url('data:image/svg+xml;utf8,<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="60" fill="%2330d49310"/><ellipse cx="220" cy="200" rx="42" ry="32" fill="%234975fa12"/><ellipse cx="50" cy="260" rx="36" ry="18" fill="%2330d49312"/><circle cx="280" cy="70" r="30" fill="%234975fa10"/></svg>')
+        repeat;
+      background-size: 320px 320px;
+      opacity: 0.18;
     }
   </style>
 </head>
 <body>
   <div class="bg-pattern"></div>
-  <div class="split-container">
-    <section class="split-left">
-      <span class="logo-text">STUDYDY</span>
-      <div class="tagline">Your Perfect Study Buddy.</div>
-      <div class="cn-tagline">利用AI，將您的文件變成神奇的互動故事</div>
-    </section>
-    <section class="split-right">
-      <main class="login-card">
-        <div>
-          <div class="welcome-title">歡迎回來</div>
-          <div class="subtitle">請輸入您的資訊以登入</div>
+  <div class="split-wrapper">
+    <!-- Left section -->
+    <section class="left-side">
+      <div class="left-content">
+        <div class="logo">
+          <span class="logo-symbol">AI</span>
+          STUDYDY
         </div>
+        <div class="main-slogan">
+          Your Perfect Study Buddy.
+        </div>
+        <div class="secondary-slogan">
+          利用AI，將您的文件變成神奇的互動故事
+        </div>
+      </div>
+    </section>
+    <!-- Right section -->
+    <section class="right-side">
+      <div class="login-card">
+        <div class="login-title">歡迎回來</div>
+        <div class="login-subtitle">請輸入您的資訊以登入</div>
         <form autocomplete="on">
           <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="you@example.com" required autofocus>
+            <label for="email">電子郵件</label>
+            <input type="email" id="email" placeholder="您的電子郵件" required autocomplete="email" autofocus>
           </div>
           <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter password" required>
+            <label for="password">密碼</label>
+            <input type="password" id="password" placeholder="請輸入密碼" required autocomplete="current-password">
           </div>
-          <div class="btn-row">
-            <button type="submit" class="btn-primary">Login</button>
-            <button type="button" class="btn-secondary">Create Account</button>
-            <a href="#" class="forgot-link">Forgot Password?</a>
+          <div class="login-actions">
+            <button type="submit" class="btn btn-primary">登入</button>
+            <button type="button" class="btn btn-secondary">建立帳號</button>
+            <button type="button" class="btn btn-link">忘記密碼?</button>
           </div>
         </form>
-      </main>
+      </div>
     </section>
   </div>
 </body>
