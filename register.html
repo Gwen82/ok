@@ -2,18 +2,14 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>Studydy Login</title>
+  <title>Studydy Register</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
       --gradient-bg: linear-gradient(120deg, #f5fcff 20%, #e9f4ff 60%, #ebffe7 100%);
-      --card-shadow: 0 8px 40px 0 rgba(64,101,244,0.08);
-      --card-bg: #fff;
-      --primary: #4975fa;
-      --secondary: #30d493;
-      --input-bg: #f4f8ff;
-      --input-border: #e5eaff;
       --font: 'Inter', 'Segoe UI', Arial, 'Noto Sans TC', '微軟正黑體', 'Heiti TC', sans-serif;
+      --input-border: #e5eaff;
+      --primary: #4975fa;
     }
     html, body {
       margin: 0;
@@ -34,7 +30,6 @@
       overflow-x: hidden;
       position: relative;
     }
-
     .bg-pattern {
       position: fixed;
       inset: 0;
@@ -46,7 +41,6 @@
       background-size: 320px 320px;
       opacity: 0.18;
     }
-
     .split-wrapper {
       display: flex;
       flex-direction: row;
@@ -136,7 +130,7 @@
       border-bottom-right-radius: 2rem;
       z-index: 2;
     }
-    .login-title {
+    .register-title {
       font-size: 2.1rem;
       font-weight: 900;
       color: #212121;
@@ -149,9 +143,9 @@
       width: 100%;
       text-align: center;
     }
-    .login-form {
+    .register-form {
       width: 100%;
-      max-width: 340px;
+      max-width: 390px;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -160,6 +154,8 @@
       position: relative;
       margin-bottom: 0px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
     }
     .input-group label {
       font-size: 1.07rem;
@@ -172,6 +168,7 @@
     }
     .input-group input {
       width: 100%;
+      min-width: 0;
       padding: 10px 1.2em 10px 1.2em;
       border-radius: 1.7em;
       border: 1.5px solid #dde5f6;
@@ -187,24 +184,70 @@
       border-color: #4975fa;
       background: #f5f9ff;
     }
-    .forgot-password {
-      position: absolute;
-      right: 0;
-      bottom: -23px;
-      font-size: 1.01rem;
-      color: #4975fa;
-      text-decoration: underline;
-      background: transparent;
-      border: none;
-      padding: 0;
-      margin: 0;
-      cursor: pointer;
-      transition: color 0.13s;
-      user-select: none;
+    /* Captcha */
+    .captcha-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
     }
-    .forgot-password:hover { color: #305196; }
-
-    .login-actions {
+    .captcha-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      margin-top: 6px;
+    }
+    .captcha-img {
+      min-width: 104px;
+      height: 44px;
+      font-size: 1.30em;
+      border-radius: 0.6em;
+      background: #fff;
+      border: 1.2px solid #dde5f6;
+      font-family: 'monospace', monospace;
+      color: #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      letter-spacing: 0.14em;
+      font-weight: bold;
+      box-sizing: border-box;
+      padding: 0 14px;
+    }
+    .captcha-input {
+      flex: 1;
+      min-width: 120px;
+      max-width: 180px;
+      padding: 10px 1.2em;
+      font-size: 1.07rem;
+      border-radius: 1.7em;
+      border: 1.5px solid #dde5f6;
+      background: #f9fbfe;
+      color: #222;
+      font-weight: 500;
+      outline: none;
+      transition: border 0.18s;
+      box-sizing: border-box;
+      margin-left: 0;
+    }
+    .captcha-input:focus {
+      border-color: #4975fa;
+      background: #f5f9ff;
+    }
+    .captcha-refresh {
+      background: none;
+      color: #4975fa;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0 7px;
+      border-radius: 10px;
+      transition: background 0.17s;
+      margin-left: 0;
+    }
+    .captcha-refresh:hover { background: #eaf1fe; }
+    .register-actions {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -212,7 +255,7 @@
       gap: 0;
       align-items: stretch;
     }
-    .btn-primary {
+    .btn-register {
       width: 100%;
       border: none;
       border-radius: 1.7em;
@@ -228,27 +271,25 @@
       transition: background 0.13s, color 0.13s;
       letter-spacing: 0.03em;
     }
-    .btn-primary:hover,
-    .btn-primary:focus {
+    .btn-register:hover,
+    .btn-register:focus {
       background: #3f6fd4;
       color: #fff;
     }
-    .login-options {
+    .register-options {
       font-size: 0.95rem;
       margin-top: 15px;
       color: #576175;
-      padding-left: 0;
       letter-spacing: 0.01em;
       text-align: center;
       width: 100%;
       display: block;
     }
-    .login-options a {
+    .register-options a {
       color: #3973c2;
       text-decoration: underline;
       margin-left: 7px;
     }
-    /* Responsive Design */
     @media (max-width: 1080px) {
       .split-wrapper {
         width: 98vw;
@@ -258,6 +299,10 @@
       .left-side, .right-side {
         min-width: 240px;
         padding: 2rem 1rem;
+      }
+      .register-form {
+        max-width: 98vw;
+        width: 95vw;
       }
     }
     @media (max-width: 800px) {
@@ -285,8 +330,19 @@
         border-radius: 0;
         padding: 1.5rem 6vw;
       }
-      .login-form {
+      .register-form {
         max-width: 100vw;
+      }
+      .captcha-row {
+        flex-direction: column;
+        gap: 6px;
+        align-items: stretch;
+      }
+      .captcha-input,
+      .captcha-img {
+        width: 100%;
+        max-width: unset;
+        min-width: 0;
       }
     }
     @media (max-width: 700px) {
@@ -311,19 +367,37 @@
     </section>
     <!-- Right Panel -->
     <section class="right-side">
-      <div class="login-title">建立帳號</div>
-      <form autocomplete="on" class="login-form">
-        <div class="input-group" style="margin-bottom:30px;">
-          <label for="email">電子郵件</label>
-          <input type="email" id="email" placeholder="xxx@example.com" required autocomplete="email">
+      <div class="register-title">建立帳號</div>
+      <form autocomplete="on" class="register-form">
+        <div class="input-group">
+          <label for="register-username">使用者名稱</label>
+          <input type="text" id="register-username" placeholder="請輸入使用者名稱" required autocomplete="username">
         </div>
-        <div class="input-group" style="margin-bottom:27px;">
-          <label for="password">密碼</label>
-          <input type="password" id="password" placeholder="********" required autocomplete="current-password">
-          <a href="#" class="forgot-password">忘記密碼？</a>
+        <div class="input-group">
+          <label for="register-email">電子郵件</label>
+          <input type="email" id="register-email" placeholder="xxx@example.com" required autocomplete="email">
         </div>
-        <div class="login-actions">
-          <button type="submit" class="btn-primary">建立帳戶</button>
+        <div class="input-group">
+          <label for="register-password">密碼</label>
+          <input type="password" id="register-password" placeholder="請輸入密碼" required autocomplete="new-password">
+        </div>
+        <div class="input-group">
+          <label for="register-confirm-password">確認密碼</label>
+          <input type="password" id="register-confirm-password" placeholder="請再次輸入密碼" required autocomplete="new-password">
+        </div>
+        <div class="captcha-group">
+          <label for="register-captcha">驗證碼</label>
+          <div class="captcha-row">
+            <span class="captcha-img" aria-label="Captcha">8FhK3</span>
+            <input type="text" id="register-captcha" class="captcha-input" name="register-captcha" placeholder="請輸入驗證碼" required autocomplete="off" maxlength="8">
+            <button class="captcha-refresh" type="button" onclick="alert('換一張圖片或整合Google reCAPTCHA！');" title="重新產生驗證碼">↻</button>
+          </div>
+        </div>
+        <div class="register-actions">
+          <button type="submit" class="btn-register">建立帳戶</button>
+          <div class="register-options">
+            已經有帳號嗎？
+            <a href="login.html">去登入</a>
           </div>
         </div>
       </form>
